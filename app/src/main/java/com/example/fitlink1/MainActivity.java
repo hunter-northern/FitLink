@@ -18,6 +18,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
     private static FirebaseAuth mAuth;
@@ -29,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword("firstuser@gma.com", "test123");
+        //FirebaseAuth.getInstance().createUserWithEmailAndPassword("firstuser@gma.com", "test123");
         Button signup = findViewById(R.id.signup);
          email = findViewById(R.id.textEmailAddress);
          password = findViewById(R.id.textPassword);
@@ -39,6 +41,13 @@ public class MainActivity extends AppCompatActivity {
                 mAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString());
             }
         });
+
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("message");
+
+        myRef.setValue("Hello, World!");
+
     }
 
     @Override
@@ -75,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(MainActivity.this, "Account Created", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(MainActivity.this, MainFeed.class));
+                            finish();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -100,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(MainActivity.this, "Sign in Successful", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(MainActivity.this, MainFeed.class));
+                            finish();
                             //updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
