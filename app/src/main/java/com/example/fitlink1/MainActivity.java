@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,10 +22,17 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firestore.v1.WriteResult;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private static FirebaseAuth mAuth;
     private EditText email, password;
+
 
 
     @Override
@@ -31,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         //FirebaseAuth.getInstance().createUserWithEmailAndPassword("firstuser@gma.com", "test123");
         Button signup = findViewById(R.id.signup);
          email = findViewById(R.id.textEmailAddress);
@@ -42,12 +52,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-
-        myRef.setValue("Hello, World!");
-
+        DocumentReference docRef = db.collection("test").document("firstUser");
+        Map<String, Object> users = new HashMap<>();
+        users.put("username", "JohnDoe");
+        users.put("email", "jd@gmail.com");
+        db.collection("users").add(users);
     }
 
     @Override
@@ -123,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 });
         // [END sign_in_with_email]
     }
+
 
 
 }
