@@ -45,18 +45,23 @@ public class MainActivity extends AppCompatActivity {
         Button signup = findViewById(R.id.signup);
          email = findViewById(R.id.textEmailAddress);
          password = findViewById(R.id.textPassword);
-        signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString());
-            }
-        });
 
-        DocumentReference docRef = db.collection("test").document("firstUser");
-        Map<String, Object> users = new HashMap<>();
-        users.put("username", "JohnDoe");
-        users.put("email", "jd@gmail.com");
-        db.collection("users").add(users);
+
+         //signup.setOnClickListener(new View.OnClickListener() {
+            //@Override
+            //public void onClick(View view) {
+                //mAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString());
+            //}
+        //});
+
+
+        //Commented out to not continuously update the database each time app is opened
+        //
+        //
+        //Map<String, Object> users = new HashMap<>();
+        //users.put("username", "JohnDoe");
+        //users.put("email", "jd@gmail.com");
+        //db.collection("users").add(users);
     }
 
     @Override
