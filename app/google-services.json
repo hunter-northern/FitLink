@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "1008522925754",
-    "project_id": "fit-link-6d672",
-    "storage_bucket": "fit-link-6d672.appspot.com"
+    "project_number": "220860495660",
+    "project_id": "friendly-eats-7d54b",
+    "storage_bucket": "friendly-eats-7d54b.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1008522925754:android:bb69787ea18cefa1e09483",
+        "mobilesdk_app_id": "1:220860495660:android:1bff596af97dcafe595e89",
         "android_client_info": {
-          "package_name": "com.example.fitlink1"
+          "package_name": "com.google.firebase.example.fireeats"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1008522925754-5k3pibdh88ue2lpco0s3h7a5hplg3hid.apps.googleusercontent.com",
+          "client_id": "220860495660-l3m8h441jq9nn95uvi9rgj8aiqft6ed9.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD6xrF0Mdg0VQ9F3OOAIl51El-ZAWKZ3Yg"
+          "current_key": "AIzaSyD2fPFl4Yt_Mn91lpMzDn6E9CBhH9IgRm4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1008522925754-5k3pibdh88ue2lpco0s3h7a5hplg3hid.apps.googleusercontent.com",
+              "client_id": "220860495660-l3m8h441jq9nn95uvi9rgj8aiqft6ed9.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
