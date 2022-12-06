@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(MainActivity.this, "Account Created", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(MainActivity.this, MainFeed.class));
+                            startActivity(new Intent(MainActivity.this, bottom_nav_screens.class));
                             finish();
                         } else {
                             // If sign in fails, display a message to the user.
@@ -114,6 +114,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void signIn(String email, String password) {
         // [START sign_in_with_email]
+        Intent myIntent = new Intent(MainActivity.this, bottom_nav_screens.class);
+        MainActivity.this.startActivity(myIntent);
+
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -123,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(MainActivity.this, "Sign in Successful", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(MainActivity.this, MainFeed.class));
+                            startActivity(new Intent(MainActivity.this, bottom_nav_screens.class));
                             finish();
                             //updateUI(user);
                         } else {
