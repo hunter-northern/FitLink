@@ -9,33 +9,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FitLink1">
         <activity
-            android:name=".MakeAPost"
-            android:exported="false"
-            android:label="@string/title_activity_make_apost">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".UserProfile"
-            android:exported="false"
-            android:label="@string/title_activity_user_profile">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".FriendSearch"
-            android:exported="false"
-            android:label="@string/title_activity_friend_search">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".MainFeed"
-            android:exported="false"
-            android:label="@string/title_activity_main_feed">
+            android:name=".bottom_nav_screens"
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
