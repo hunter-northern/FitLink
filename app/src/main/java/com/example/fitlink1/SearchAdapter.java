@@ -47,7 +47,7 @@ public class SearchAdapter extends ArrayAdapter<UserName> {
                 // on the item click on our list view.
                 // we are displaying a toast message.
                 Toast.makeText(getContext(), "User Followed",Toast.LENGTH_SHORT).show();
-                
+
             }
         });
 
