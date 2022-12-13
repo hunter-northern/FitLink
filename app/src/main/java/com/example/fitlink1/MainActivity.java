@@ -115,29 +115,30 @@ public class MainActivity extends AppCompatActivity {
     private void signIn(String email, String password) {
         // [START sign_in_with_email]
         Intent myIntent = new Intent(MainActivity.this, bottom_nav_screens.class);
+        myIntent.putExtra("username", email);
         MainActivity.this.startActivity(myIntent);
 
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            Toast.makeText(MainActivity.this, "Sign in Successful", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(MainActivity.this, bottom_nav_screens.class));
-                            finish();
-                            //updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            //Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
-                                    //Toast.LENGTH_SHORT).show();
-                            //updateUI(null);
-                        }
-                    }
-                });
+//        mAuth.signInWithEmailAndPassword(email, password)
+//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task) {
+//                        if (task.isSuccessful()) {
+//                            // Sign in success, update UI with the signed-in user's information
+//                            Log.d(TAG, "signInWithEmail:success");
+//                            FirebaseUser user = mAuth.getCurrentUser();
+//                            Toast.makeText(MainActivity.this, "Sign in Successful", Toast.LENGTH_SHORT).show();
+//                            startActivity(new Intent(MainActivity.this, bottom_nav_screens.class));
+//                            finish();
+//                            //updateUI(user);
+//                        } else {
+//                            // If sign in fails, display a message to the user.
+//                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+//                            //Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
+//                                    //Toast.LENGTH_SHORT).show();
+//                            //updateUI(null);
+//                        }
+//                    }
+//                });
         // [END sign_in_with_email]
     }
 
