@@ -153,7 +153,7 @@ public void createUserDoc(String email, String id){
     String[] For_split_email=emailShort.split("[@._]");
     username = For_split_email[0];
 
-    Toast.makeText(MainActivity.this, username, Toast.LENGTH_SHORT).show();
+    Toast.makeText(MainActivity.this, username + " CREATED!", Toast.LENGTH_SHORT).show();
 
     Map<String, Object> city = new HashMap<>();
     city.put("username", username);

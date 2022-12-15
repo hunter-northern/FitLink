@@ -28,6 +28,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+//
+//
+//adapter class for usernames and following users
+
 
 public class SearchAdapter extends ArrayAdapter<UserName> {
     FirebaseFirestore db;
@@ -52,67 +56,19 @@ public class SearchAdapter extends ArrayAdapter<UserName> {
         listItems.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // on the item click on our list view.
-                // we are displaying a toast message.
+
                 db = FirebaseFirestore.getInstance();
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser() ;
                 String id = user.getUid();
                 String Added = p.getUsername(); // trying to get array from firestore to update friendlist
-                String[] array;
-
-                DocumentReference washingtonRef = db.collection("users").document(id);
-
-
-                washingtonRef.update("friendsList", FieldValue.arrayUnion(Added));
-
-
-                //array = db.collection("user").document(id).get("friendsList");
-               // Map<String, Object> docData = new HashMap<>();
-                //docData.put("FriendsList", Arrays.asList(Added));
-
+                DocumentReference Ref = db.collection("users").document(id);
+                Ref.update("friendsList", FieldValue.arrayUnion(Added));
 
                 Toast.makeText(getContext(), "User Followed: " + p.getUsername(),Toast.LENGTH_SHORT).show();
-                //db.collection("users").document(id).update(docData);
-
             }
         });
 
         return listItems;
     }
 
-
-    //@NonNull
-    //@Override
-    //public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//
-//        View v = LayoutInflater.from(context).inflate(R.layout.item, parent, false);
-//
-//        return new ViewHolder(v);
-//    }
-
-//    @Override
-//    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
-//        UserName username = userArrayList.get(position);
-
-//        holder.username.setText(username.username);
-
-//    }
-
-//    @Override
-//    public int getItemCount() {
-//        return userArrayList.size();
-//    }
-//
- //   static class ViewHolder extends RecyclerView.ViewHolder {
-
-//        TextView username;
-
-//        public ViewHolder(View itemView) {
-//            super(itemView);
-
-//            username = itemView.findViewById(R.id.email);
-
-//        }
-//    }
 }
