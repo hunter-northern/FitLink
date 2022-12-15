@@ -31,10 +31,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-//
-//
-//adapter class for usernames and following users
 
+/**
+ * This class is the adapter class created to handle the listview for displaying existing
+ * and searched for usernames
+ */
 
 public class SearchAdapter extends ArrayAdapter<UserName> implements Filterable{
     FirebaseFirestore db;
@@ -48,6 +49,14 @@ public class SearchAdapter extends ArrayAdapter<UserName> implements Filterable{
         super(context, 0, userArrayList);
     }
 
+    /**
+     * Creates the individual listview
+     * @param position
+     * @param convView
+     * @param parent
+     * @return Returns the listview
+     */
+
     public View getView(int position, @Nullable View convView, @NonNull ViewGroup parent){
         View listItems = convView;
         if (listItems == null) {
@@ -57,7 +66,11 @@ public class SearchAdapter extends ArrayAdapter<UserName> implements Filterable{
         TextView email = listItems.findViewById(R.id.userNameView);
         email.setText(p.getUsername());
 
-
+/**
+ * On click listener for the follow user option
+ * gets the user associated with the listview clicked and creates or amends users friendslist array
+ * within firebase document
+ */
         listItems.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
