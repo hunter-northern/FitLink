@@ -143,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+
         // [END sign_in_with_email]
     }
 
