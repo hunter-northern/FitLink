@@ -15,15 +15,33 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+/**
+ * Class to adapt a an array of posts to fill a list view
+ */
 public class PostAdapter extends ArrayAdapter<Posts> {
-
+    /**
+     * the given context
+     * the array list of posts
+     */
     Context context;
     ArrayList<Posts> list;
 
+    /**
+     * General constructor for Post Adapter
+     * @param context context
+     * @param list list of posts to adapt
+     */
     public PostAdapter(Context context, ArrayList<Posts> list) {
         super(context, 0, list);
     }
 
+    /**
+     * gets and returns the list view
+     * @param position position within the array of posts
+     * @param convView convert view is the passed in view to adapts
+     * @param parent view group listeview is apart of
+     * @return listview items in fragments
+     */
     public View getView(int position, @Nullable View convView, @NonNull ViewGroup parent){
         View listItems = convView;
         if (listItems == null) {
@@ -38,38 +56,5 @@ public class PostAdapter extends ArrayAdapter<Posts> {
         //comments.setText(p.getComments()[0]);
         return listItems;
     }
-
-//    @NonNull
-//    @Override
-//    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        View v = LayoutInflater.from(context).inflate(R.layout.postentry, parent, false);
-//        return new MyViewHolder(v);
-//    }
-//
-//    @Override
-//    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-//        Posts post = list.get(position);
-//        holder.email.setText(post.getEmail());
-//        holder.workout.setText(post.getWorkout());
-//    }
-//
-//    @Override
-//    public int getItemCount() {
-//        return list.size();
-//    }
-//
-//    public static class MyViewHolder extends RecyclerView.ViewHolder{
-//        TextView email, workout, comments;
-//        EditText newComment;
-//        Button submit;
-//        public MyViewHolder(@NonNull View itemView) {
-//            super(itemView);
-//            email = itemView.findViewById(R.id.textEmailAddress);
-//            workout = itemView.findViewById(R.id.textWorkout);
-//            comments = itemView.findViewById(R.id.Comments);
-//            newComment = itemView.findViewById(R.id.eTextComment);
-//            submit = itemView.findViewById(R.id.commentSub);
-//        }
-//    }
 
 }

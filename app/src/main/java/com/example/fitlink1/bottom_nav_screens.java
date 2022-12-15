@@ -11,14 +11,26 @@ import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
+/**
+ * bottom nav screens is our main activity for controlling our fragments and showing the different screens
+ */
 public class bottom_nav_screens extends AppCompatActivity {
 
+    /**
+     * These are our main variables we used to instantiate the views and classes
+     * Bottom Nav View is a representative of this class
+     * main feed frag is the fragment for our main feed activity
+     * searchFrag is the fragment for our search activity
+     * profileFrag is the fragment for our profile activity
+     * usrEmail is passed from our login activity as an intent extra to hold our users id
+     */
     BottomNavigationView bottomNavigationView;
     MainFeed mainFeedFrag = new MainFeed();
     Search searchFrag = new Search();
     Profile profFrag = new Profile();
     String usrEmail = "";
     @Override
+    
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom_nav_screens);

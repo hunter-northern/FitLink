@@ -30,9 +30,15 @@ import java.util.Objects;
  * A simple {@link Fragment} subclass.
  * Use the {@link MainFeed#newInstance} factory method to
  * create an instance of this fragment.
+ * Used to list view our main feed of workouts
  */
 public class MainFeed extends Fragment {
-    RecyclerView recycler;
+    /**
+     * postList is an array list of posts that we fille from the database
+     * pAdapter formats those posts into our list view
+     * fsPosts is our firebase Reference
+     * postListView is our list view of posts
+     */
     ArrayList<Posts> postList = new ArrayList<>();
     PostAdapter pAdapter;
     FirebaseFirestore fsPosts;
@@ -44,6 +50,7 @@ public class MainFeed extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
 
+
     public MainFeed() {
         // Required empty public constructor
     }
@@ -52,7 +59,7 @@ public class MainFeed extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
+     * @param param1 Parameter 1. holds the username
      * @return A new instance of fragment MainFeed.
      */
     // TODO: Rename and change types and number of parameters
@@ -64,6 +71,10 @@ public class MainFeed extends Fragment {
         return fragment;
     }
 
+    /**
+     * Used to instantiate the fragment view the first time from the bottom nav screens class
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,17 +83,21 @@ public class MainFeed extends Fragment {
         }
     }
 
+
+    /**
+     * Our main activity area of this view/fragment: makes a firestore request and fills the list view with the posts recieved
+     * @param inflater inflates the frag view
+     * @param container holds the view within the activity screen
+     * @param savedInstanceState holds previous instance state
+     * @return none
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         final View root = inflater.inflate(R.layout.fragment_main_feed, container, false);
-        //recycler = root.findViewById(R.id.recycleview);
         fsPosts = FirebaseFirestore.getInstance();
         postList = new ArrayList<>();
-//        recycler.setAdapter(pAdapter);
-//        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         postListView = root.findViewById(R.id.listView);
 
 
