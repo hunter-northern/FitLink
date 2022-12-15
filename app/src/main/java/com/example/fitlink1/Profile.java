@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +24,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,9 +42,11 @@ public class Profile extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "username";
-    DatabaseReference dbPosts;
     FirebaseFirestore fsPosts;
     public TextView user;
+    ArrayList<Posts> postList = new ArrayList<>();
+    PostAdapter pAdapter;
+    ListView postListView;
     // TODO: Rename and change types of parameters
     private String username;
     public String workout;
@@ -83,21 +92,55 @@ public class Profile extends Fragment {
         user.setText(username);
         workEdit = (EditText) root.findViewById(R.id.workout);
         submit = (Button) root.findViewById(R.id.submit);
-        dbPosts = FirebaseDatabase.getInstance().getReference();
         fsPosts = FirebaseFirestore.getInstance();
+        postListView = root.findViewById(R.id.list_view_profile);
+        postList = new ArrayList<>();
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 InsertData();
             }
         });
+
+        fsPosts.collection("posts").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(@NonNull QuerySnapshot queryDocumentSnapshots) {
+                Toast.makeText(getContext(), "Req Successful", Toast.LENGTH_SHORT).show();
+                if (!queryDocumentSnapshots.isEmpty()) {
+                    Toast.makeText(getContext(), "Check 2", Toast.LENGTH_SHORT).show();
+                    List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                    for (DocumentSnapshot document : list) {
+                        Posts p = document.toObject(Posts.class);
+                        if(Objects.isNull(p)){
+                            Toast.makeText(getContext(), "Null Object", Toast.LENGTH_SHORT).show();
+                        } else {
+                            if(username.equals(p.getEmail())){
+                                postList.add(p);
+                            }
+                        }
+
+                    }
+                    pAdapter = new PostAdapter(getContext(), postList);
+                    postListView.setAdapter(pAdapter);
+                } else {
+                    Toast.makeText(getContext(), "List Empty", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // we are displaying a toast message
+                // when we get any error from Firebase.
+                Toast.makeText(getContext(), "Fail to load data..", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return root;
     }
 
     public void InsertData(){
         String usrEmail = username;
         String workout = workEdit.getText().toString();
-        String id = dbPosts.getKey();
         Posts post = new Posts(usrEmail, workout);
         fsPosts.collection("posts").add(post).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
