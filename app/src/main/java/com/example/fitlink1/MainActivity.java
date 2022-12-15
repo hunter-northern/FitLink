@@ -100,7 +100,9 @@ public class MainActivity extends AppCompatActivity {
                             String id = user.getUid();
                             createUserDoc(email, id);
                             Toast.makeText(MainActivity.this, "Account Created", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(MainActivity.this, bottom_nav_screens.class));
+                            Intent myIntent = new Intent(MainActivity.this, bottom_nav_screens.class);
+                            myIntent.putExtra("username", email);
+                            startActivity(myIntent);
                             finish();
                         } else {
                             // If sign in fails, display a message to the user.

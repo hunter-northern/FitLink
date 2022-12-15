@@ -41,6 +41,18 @@ public class Profile extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    /**
+     * our universal variables for the porfile class
+     * fsPosts is our reference to our database
+     * user is the TextView of the users username
+     * postList is an array of posts that is filled by a firestore request
+     * pAdpater adapts the postList into our view
+     * postListView is our post list view
+     * username is the passed in email of the user
+     * workout is the string taken from the edit text to post for the user
+     * workEdit is the EditText to type the workout into
+     * submit is the button to post the workout to firestore
+     */
     private static final String ARG_PARAM1 = "username";
     FirebaseFirestore fsPosts;
     public TextView user;
@@ -74,6 +86,10 @@ public class Profile extends Fragment {
         return fragment;
     }
 
+    /**
+     * the initial on create for this fragment
+     * @param savedInstanceState previous state info
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,10 +99,24 @@ public class Profile extends Fragment {
 
     }
 
+    /**
+     * onCreateView that handles and is used each time the fragment is tapped on
+     * @param inflater inflates the fragment into the view of the layout
+     * @param container container holds the view in its group
+     * @param savedInstanceState previous state into
+     * @return View to set into the layout manager
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        /**
+         * root view of the inflater in order to access layout components
+         * user is the text view set to the username of the user
+         * reinstantiate the postList array in order to avoid copies
+         * on click listener for the submit button to submit posts
+         * onSuccess listener and onFaliure listener to tell how the firestore request faired and then responding properly
+         */
         final View root = inflater.inflate(R.layout.fragment_profile, container, false);
         user = (TextView) root.findViewById(R.id.username);
         user.setText(username);
