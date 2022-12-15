@@ -68,6 +68,12 @@
         android:textColor="@color/black"
         android:textSize="15dp"/>
 
-
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_below="@+id/submit"
+        android:layout_marginTop="10dp"
+        android:layout_height="match_parent"
+        android:id="@+id/list_view_profile"
+        />
 
 </RelativeLayout>

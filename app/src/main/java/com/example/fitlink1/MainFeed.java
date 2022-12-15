@@ -80,7 +80,7 @@ public class MainFeed extends Fragment {
         final View root = inflater.inflate(R.layout.fragment_main_feed, container, false);
         //recycler = root.findViewById(R.id.recycleview);
         fsPosts = FirebaseFirestore.getInstance();
-
+        postList = new ArrayList<>();
 //        recycler.setAdapter(pAdapter);
 //        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         postListView = root.findViewById(R.id.listView);
@@ -98,7 +98,9 @@ public class MainFeed extends Fragment {
                         if(Objects.isNull(p)){
                             Toast.makeText(getContext(), "Null Object", Toast.LENGTH_SHORT).show();
                         } else {
-                            postList.add(p);
+                            if(!mParam1.equals(p.getEmail())){
+                                postList.add(p);
+                            }
                         }
 
                     }
