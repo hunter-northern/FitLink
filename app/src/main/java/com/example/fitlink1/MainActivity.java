@@ -32,7 +32,8 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     private static FirebaseAuth mAuth;
     private EditText email, password;
-
+    FirebaseFirestore db;
+    String username;
 
 
     @Override
@@ -40,12 +41,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
         //FirebaseAuth.getInstance().createUserWithEmailAndPassword("firstuser@gma.com", "test123");
         Button signup = findViewById(R.id.signup);
          email = findViewById(R.id.textEmailAddress);
          password = findViewById(R.id.textPassword);
-
+        String docEmail;
 
          //signup.setOnClickListener(new View.OnClickListener() {
             //@Override
@@ -96,6 +97,8 @@ public class MainActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            String id = user.getUid();
+                            createUserDoc(email, id);
                             Toast.makeText(MainActivity.this, "Account Created", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(MainActivity.this, bottom_nav_screens.class));
                             finish();
@@ -114,34 +117,52 @@ public class MainActivity extends AppCompatActivity {
 
     private void signIn(String email, String password) {
         // [START sign_in_with_email]
-        Intent myIntent = new Intent(MainActivity.this, bottom_nav_screens.class);
-        myIntent.putExtra("username", email);
-        MainActivity.this.startActivity(myIntent);
+        //Intent myIntent = new Intent(MainActivity.this, bottom_nav_screens.class);
+        //MainActivity.this.startActivity(myIntent);
 
-//        mAuth.signInWithEmailAndPassword(email, password)
-//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if (task.isSuccessful()) {
-//                            // Sign in success, update UI with the signed-in user's information
-//                            Log.d(TAG, "signInWithEmail:success");
-//                            FirebaseUser user = mAuth.getCurrentUser();
-//                            Toast.makeText(MainActivity.this, "Sign in Successful", Toast.LENGTH_SHORT).show();
-//                            startActivity(new Intent(MainActivity.this, bottom_nav_screens.class));
-//                            finish();
-//                            //updateUI(user);
-//                        } else {
-//                            // If sign in fails, display a message to the user.
-//                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-//                            //Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
-//                                    //Toast.LENGTH_SHORT).show();
-//                            //updateUI(null);
-//                        }
-//                    }
-//                });
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            Toast.makeText(MainActivity.this, "Sign in Successful", Toast.LENGTH_SHORT).show();
+                            //startActivity(new Intent(MainActivity.this, bottom_nav_screens.class));
+                            Intent myIntent = new Intent(MainActivity.this, bottom_nav_screens.class);
+                            MainActivity.this.startActivity(myIntent);
+                            finish();
+                            //updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            //Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
+                                    //Toast.LENGTH_SHORT).show();
+                            //updateUI(null);
+                        }
+                    }
+                });
+
         // [END sign_in_with_email]
     }
 
+public void createUserDoc(String email, String id){
 
+    FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+
+    String emailShort = email;
+
+    String[] For_split_email=emailShort.split("[@._]");
+    username = For_split_email[0];
+
+    Toast.makeText(MainActivity.this, username + " CREATED!", Toast.LENGTH_SHORT).show();
+
+    Map<String, Object> city = new HashMap<>();
+    city.put("username", username);
+    city.put("email", email);
+
+    db.collection("users").document(id).set(city);
+}
 
 }
