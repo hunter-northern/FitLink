@@ -13,14 +13,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/Searching"
-                android:layout_width="match_parent"
-                android:layout_height="58dp" />
 
             <EditText
                 android:id="@+id/searchInput"
@@ -39,7 +34,7 @@
 
             <Button
                 android:id="@+id/searchButton"
-                android:layout_width="104dp"
+                android:layout_width="wrap_content"
                 android:layout_height="70dp"
                 android:layout_weight="1"
                 android:onClick="onFollowClicked"
