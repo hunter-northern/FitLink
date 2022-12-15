@@ -1,5 +1,6 @@
 package com.example.fitlink1;
 
+import android.app.appsearch.SearchResult;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -55,10 +56,11 @@ public class Search extends Fragment {
     private static final String username = "username";
     private String mParam1;
     TextView searchInput;
-    String searchResult = "Jo";
+    String searchResult = "";
     Button button;
     SearchView searchView;
     Context context;
+    Button searchButton;
 
 
     public Search() {
@@ -90,18 +92,68 @@ public class Search extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
        // return inflater.inflate(R.layout.fragment_search, container, false);
-
+        userArrayList = new ArrayList<>();
         //searchInput = getView().findViewById(R.id.searchInput);
         final View root = inflater.inflate(R.layout.fragment_search, container, false);
         //recycler = root.findViewById(R.id.recycleview);
         db = FirebaseFirestore.getInstance();
         //button = root.findViewById(R.id.search_button);
-        searchView = root.findViewById(R.id.Searching);
+        //searchView = root.findViewById(R.id.Searching);
 //        recycler.setAdapter(pAdapter);
 //        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         userListView = root.findViewById(R.id.searchRecycler);
+        searchButton = root.findViewById(R.id.searchButton);
 
-        searchView.setOnQueryTextListener((SearchView.OnQueryTextListener) context);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchInput = root.findViewById(R.id.searchInput);
+                searchResult = searchInput.getText().toString();
+                userArrayList = new ArrayList<>();
+
+                db.collection("users").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(@NonNull QuerySnapshot queryDocumentSnapshots) {
+                        Toast.makeText(getContext(), "Req Successful", Toast.LENGTH_SHORT).show();
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            Toast.makeText(getContext(), "Check 2", Toast.LENGTH_SHORT).show();
+                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                            for (DocumentSnapshot document : list) {
+                                UserName p = document.toObject(UserName.class);
+                                if(Objects.isNull(p)){
+                                    Toast.makeText(getContext(), "Null Object", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    if (!(p.getUsername().indexOf(searchResult) == -1)) {
+                                        userArrayList.add(p);
+                                    }
+                                    if(searchResult == null){
+                                        Toast.makeText(getContext(), "searched", Toast.LENGTH_SHORT).show();
+                                        //UserName s = userArrayList.iterator();
+                                        myAdapter.getFilter().filter(searchResult);
+                                    }
+
+                                }
+
+                            }
+                            myAdapter = new SearchAdapter(getContext(), userArrayList);
+                            userListView.setAdapter(myAdapter);
+                        } else {
+                            Toast.makeText(getContext(), "List Empty", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // we are displaying a toast message
+                        // when we get any error from Firebase.
+                        Toast.makeText(getContext(), "Fail to load data..", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+        });
+
+
 
 
 
@@ -119,7 +171,9 @@ public class Search extends Fragment {
                         if(Objects.isNull(p)){
                             Toast.makeText(getContext(), "Null Object", Toast.LENGTH_SHORT).show();
                         } else {
-                            userArrayList.add(p);
+                            if (!(p.getUsername().indexOf(searchResult) == -1)) {
+                                userArrayList.add(p);
+                            }
                             if(searchResult == null){
                                 Toast.makeText(getContext(), "searched", Toast.LENGTH_SHORT).show();
                                 //UserName s = userArrayList.iterator();
@@ -158,13 +212,15 @@ public class Search extends Fragment {
 
 
     public boolean onQueryTextSubmit(String query) {
-        myAdapter.getFilter().filter(query);
+        searchResult= query;
+        Toast.makeText(getContext(), "Searched", Toast.LENGTH_SHORT).show();
         return true;
     }
 
 
     public boolean onQueryTextChange(String newText) {
-        myAdapter.getFilter().filter(newText);
+        searchResult= newText;
+        Toast.makeText(getContext(), "Searched", Toast.LENGTH_SHORT).show();
         return true;
     }
 
