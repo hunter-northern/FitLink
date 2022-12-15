@@ -3,6 +3,7 @@ package com.example.fitlink1;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -16,12 +17,18 @@ public class bottom_nav_screens extends AppCompatActivity {
     MainFeed mainFeedFrag = new MainFeed();
     Search searchFrag = new Search();
     Profile profFrag = new Profile();
-
+    String usrEmail = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom_nav_screens);
-
+        Intent i = getIntent();
+        usrEmail = i.getExtras().getString("username");
+        Bundle bundle = new Bundle();
+        bundle.putString("username", usrEmail);
+        mainFeedFrag.setArguments(bundle);
+        searchFrag.setArguments(bundle);
+        profFrag.setArguments(bundle);
         bottomNavigationView = findViewById(R.id.bottom_nav);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, mainFeedFrag).commit();
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
