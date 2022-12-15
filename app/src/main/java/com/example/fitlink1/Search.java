@@ -11,13 +11,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fitlink1.databinding.FragmentMainFeedBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.common.base.Predicates;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +40,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.auth.User;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,6 +53,9 @@ public class Search extends Fragment {
     ListView userListView;
     private static final String username = "username";
     private String mParam1;
+    TextView searchInput;
+    String searchResult = "Jo";
+    Button button;
 
 
     public Search() {
@@ -78,14 +88,15 @@ public class Search extends Fragment {
         // Inflate the layout for this fragment
        // return inflater.inflate(R.layout.fragment_search, container, false);
 
-
+        //searchInput = getView().findViewById(R.id.searchInput);
         final View root = inflater.inflate(R.layout.fragment_search, container, false);
         //recycler = root.findViewById(R.id.recycleview);
         db = FirebaseFirestore.getInstance();
-
+        button = root.findViewById(R.id.search_button);
 //        recycler.setAdapter(pAdapter);
 //        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         userListView = root.findViewById(R.id.searchRecycler);
+
 
 
         db.collection("users").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -101,6 +112,12 @@ public class Search extends Fragment {
                             Toast.makeText(getContext(), "Null Object", Toast.LENGTH_SHORT).show();
                         } else {
                             userArrayList.add(p);
+                            if(searchResult == null){
+                                Toast.makeText(getContext(), "searched", Toast.LENGTH_SHORT).show();
+                                //UserName s = userArrayList.iterator();
+                                myAdapter.getFilter().filter(searchResult);
+                            }
+
                         }
 
                     }
@@ -128,6 +145,11 @@ public class Search extends Fragment {
 
 
     }
+
+
+
+
+
 
     public void onFollowClicked(View view){
         Toast.makeText(getContext(), "user followed", Toast.LENGTH_SHORT).show();
