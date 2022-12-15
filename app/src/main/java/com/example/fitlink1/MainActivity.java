@@ -29,6 +29,10 @@ import com.google.firestore.v1.WriteResult;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class is responsible for the authentication and account creation
+ */
+
 public class MainActivity extends AppCompatActivity {
     private static FirebaseAuth mAuth;
     private EditText email, password;
@@ -48,21 +52,7 @@ public class MainActivity extends AppCompatActivity {
          password = findViewById(R.id.textPassword);
         String docEmail;
 
-         //signup.setOnClickListener(new View.OnClickListener() {
-            //@Override
-            //public void onClick(View view) {
-                //mAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString());
-            //}
-        //});
 
-
-        //Commented out to not continuously update the database each time app is opened
-        //
-        //
-        //Map<String, Object> users = new HashMap<>();
-        //users.put("username", "JohnDoe");
-        //users.put("email", "jd@gmail.com");
-        //db.collection("users").add(users);
     }
 
     @Override
@@ -75,17 +65,34 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Receives the email and password data entered into the edit text fields
+     * @param v
+     */
+
     public void onSignInClicked( View v){
         String txt_email = email.getText().toString();
         String txt_password = password.getText().toString();
         signIn(txt_email, txt_password);
     }
 
+    /**
+     * Receives the email and password data entered into the edit text fields
+     * @param v
+     */
+
     public void onSignUpClicked (View view){
         String txt_email = email.getText().toString();
         String txt_password = password.getText().toString();
         createAccount(txt_email, txt_password);
     }
+
+    /**
+     * Creates an accound via firebase. On success calls upon createuserdoc
+     * and starts the mainfeed activity
+     * @param email user input email
+     * @param password user input password
+     */
 
     private void createAccount(String email, String password) {
         // [START create_user_with_email]
@@ -114,6 +121,12 @@ public class MainActivity extends AppCompatActivity {
         // [END create_user_with_email]
     }
 
+    /**
+     * Authenticates users accound information via firebase
+     * onsuccess Mainfeed activity is started
+     * @param email user input email
+     * @param password user input password
+     */
 
     private void signIn(String email, String password) {
         // [START sign_in_with_email]
@@ -147,6 +160,13 @@ public class MainActivity extends AppCompatActivity {
 
         // [END sign_in_with_email]
     }
+
+    /**
+     * Creates a user document containing the users username and email.
+     * document is created using same user Id from firebase Authentication
+     * @param email user input email
+     * @param id id generated from user account
+     */
 
 public void createUserDoc(String email, String id){
 

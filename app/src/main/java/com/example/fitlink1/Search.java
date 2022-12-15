@@ -46,6 +46,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ *frag that populates the search adapter with username information from firestore
+ */
+
 public class Search extends Fragment {
 
     RecyclerView recyclerView;
@@ -87,20 +91,25 @@ public class Search extends Fragment {
 
     }
 
+    /**
+     * Oncreateview inflates the views within the fragment and uses to UserName and SearchAdapter
+     * classes to pupulate and arraylist and fill the listviews with that data
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return the view inflated within this fragment
+     */
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-       // return inflater.inflate(R.layout.fragment_search, container, false);
+
         userArrayList = new ArrayList<>();
-        //searchInput = getView().findViewById(R.id.searchInput);
+
         final View root = inflater.inflate(R.layout.fragment_search, container, false);
-        //recycler = root.findViewById(R.id.recycleview);
+
         db = FirebaseFirestore.getInstance();
-        //button = root.findViewById(R.id.search_button);
-        //searchView = root.findViewById(R.id.Searching);
-//        recycler.setAdapter(pAdapter);
-//        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+
         userListView = root.findViewById(R.id.searchRecycler);
         searchButton = root.findViewById(R.id.searchButton);
 
@@ -207,29 +216,6 @@ public class Search extends Fragment {
 
 
     }
-
-
-
-
-    public boolean onQueryTextSubmit(String query) {
-        searchResult= query;
-        Toast.makeText(getContext(), "Searched", Toast.LENGTH_SHORT).show();
-        return true;
-    }
-
-
-    public boolean onQueryTextChange(String newText) {
-        searchResult= newText;
-        Toast.makeText(getContext(), "Searched", Toast.LENGTH_SHORT).show();
-        return true;
-    }
-
-
-
-    public void onFollowClicked(View view){
-        Toast.makeText(getContext(), "user followed", Toast.LENGTH_SHORT).show();
-    }
-
 
 
 }
