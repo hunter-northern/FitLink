@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,6 +28,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 //
@@ -33,11 +36,13 @@ import java.util.Map;
 //adapter class for usernames and following users
 
 
-public class SearchAdapter extends ArrayAdapter<UserName> {
+public class SearchAdapter extends ArrayAdapter<UserName> implements Filterable{
     FirebaseFirestore db;
     Context context;
     ArrayList<UserName> userArrayList;
     String searched = null;
+    List<UserName> userList;
+    List<UserName> mStringFilterList;
 
     public SearchAdapter(Context context, ArrayList<UserName> userArrayList) {
         super(context, 0, userArrayList);

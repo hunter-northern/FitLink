@@ -1,9 +1,11 @@
 package com.example.fitlink1;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,6 +57,8 @@ public class Search extends Fragment {
     TextView searchInput;
     String searchResult = "Jo";
     Button button;
+    SearchView searchView;
+    Context context;
 
 
     public Search() {
@@ -92,10 +95,15 @@ public class Search extends Fragment {
         final View root = inflater.inflate(R.layout.fragment_search, container, false);
         //recycler = root.findViewById(R.id.recycleview);
         db = FirebaseFirestore.getInstance();
-        button = root.findViewById(R.id.search_button);
+        //button = root.findViewById(R.id.search_button);
+        searchView = root.findViewById(R.id.Searching);
 //        recycler.setAdapter(pAdapter);
 //        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         userListView = root.findViewById(R.id.searchRecycler);
+
+        searchView.setOnQueryTextListener((SearchView.OnQueryTextListener) context);
+
+
 
 
 
@@ -148,6 +156,17 @@ public class Search extends Fragment {
 
 
 
+
+    public boolean onQueryTextSubmit(String query) {
+        myAdapter.getFilter().filter(query);
+        return true;
+    }
+
+
+    public boolean onQueryTextChange(String newText) {
+        myAdapter.getFilter().filter(newText);
+        return true;
+    }
 
 
 

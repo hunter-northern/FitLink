@@ -13,9 +13,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="64dp"
             android:orientation="horizontal">
 
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/Searching"
+                android:layout_width="match_parent"
+                android:layout_height="58dp" />
 
             <EditText
                 android:id="@+id/searchInput"
